@@ -1,0 +1,70 @@
+package de.topobyte.pagegen.bootstrap;
+
+import static de.topobyte.jsoup.ElementBuilder.create;
+import static de.topobyte.jsoup.ElementBuilder.script;
+import static de.topobyte.jsoup.ElementBuilder.styleSheet;
+
+import java.io.IOException;
+import java.nio.file.Path;
+
+import org.jsoup.nodes.Element;
+
+import de.topobyte.jsoup.FaviconUtil;
+import de.topobyte.jsoup.components.Div;
+import de.topobyte.pagegen.core.BaseFileGenerator;
+import de.topobyte.pagegen.core.Context;
+import de.topobyte.pagegen.core.LinkResolver;
+
+public class BootstrapGenerator extends BaseFileGenerator
+{
+
+	public BootstrapGenerator(Context context, Path file, boolean isDir)
+	{
+		super(context, file, isDir);
+	}
+
+	private static String[] cssPaths = new String[] {
+			"bower/bootstrap/styles/bootstrap.css",
+			"bower/bootstrap/styles/bootstrap-theme.css", "custom.css",
+			"sticky-footer-navbar.css" };
+
+	private static String[] jsPaths = new String[] {
+			"bower/jquery/js/jquery.min.js", "bower/bootstrap/js/collapse.js",
+			"bower/bootstrap/js/transition.js",
+			"bower/bootstrap/js/dropdown.js" };
+
+	public static void setupHeader(LinkResolver resolver, Element head)
+	{
+		head.appendChild(create("meta", "http-equiv", "content-type",
+				"content", "text/html; charset=utf-8"));
+		head.appendChild(create("meta", "name", "viewport", "content",
+				"width=device-width, initial-scale=1"));
+
+		for (String cssPath : cssPaths) {
+			head.appendChild(styleSheet(resolver.getLinkFromBase(cssPath)));
+		}
+
+		for (String jsPath : jsPaths) {
+			head.appendChild(script(resolver.getLinkFromBase(jsPath)));
+		}
+	}
+
+	@Override
+	public void generate() throws IOException
+	{
+		Element head = builder.getHead();
+
+		setupHeader(this, head);
+
+		String faviconPath = getLink(context.getFavIcon());
+		FaviconUtil.addToHeader(head, faviconPath);
+
+		/*
+		 * Main Content
+		 */
+
+		content = new Div("container");
+		builder.getBody().appendChild(content);
+	}
+
+}
