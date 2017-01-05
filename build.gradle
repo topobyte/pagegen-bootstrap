@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     compile 'de.topobyte:jsoup-elements:0.0.12'
-    compile 'topobyte:pagegen-core:0.0.1'
+    compile 'topobyte:pagegen-core:0.0.2'
 }
 
 uploadArchives {

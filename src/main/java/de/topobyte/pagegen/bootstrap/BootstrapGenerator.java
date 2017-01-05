@@ -5,7 +5,6 @@ import static de.topobyte.jsoup.ElementBuilder.script;
 import static de.topobyte.jsoup.ElementBuilder.styleSheet;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 import org.jsoup.nodes.Element;
 
@@ -14,13 +13,15 @@ import de.topobyte.jsoup.components.Div;
 import de.topobyte.pagegen.core.BaseFileGenerator;
 import de.topobyte.pagegen.core.Context;
 import de.topobyte.pagegen.core.LinkResolver;
+import de.topobyte.webpaths.WebPath;
+import de.topobyte.webpaths.WebPaths;
 
 public class BootstrapGenerator extends BaseFileGenerator
 {
 
-	public BootstrapGenerator(Context context, Path file, boolean isDir)
+	public BootstrapGenerator(Context context, WebPath path)
 	{
-		super(context, file, isDir);
+		super(context, path);
 	}
 
 	private static String[] cssPaths = new String[] {
@@ -41,11 +42,12 @@ public class BootstrapGenerator extends BaseFileGenerator
 				"width=device-width, initial-scale=1"));
 
 		for (String cssPath : cssPaths) {
-			head.appendChild(styleSheet(resolver.getLinkFromBase(cssPath)));
+			resolver.getLink(WebPaths.get(cssPath));
+			head.appendChild(styleSheet(resolver.getLink(WebPaths.get(cssPath))));
 		}
 
 		for (String jsPath : jsPaths) {
-			head.appendChild(script(resolver.getLinkFromBase(jsPath)));
+			head.appendChild(script(resolver.getLink(WebPaths.get(jsPath))));
 		}
 	}
 
