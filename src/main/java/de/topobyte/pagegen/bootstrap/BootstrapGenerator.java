@@ -42,7 +42,6 @@ public class BootstrapGenerator extends BaseFileGenerator
 				"width=device-width, initial-scale=1"));
 
 		for (String cssPath : cssPaths) {
-			resolver.getLink(WebPaths.get(cssPath));
 			head.appendChild(styleSheet(resolver.getLink(WebPaths.get(cssPath))));
 		}
 
