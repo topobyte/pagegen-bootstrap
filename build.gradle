@@ -11,17 +11,13 @@ version = pVersion
 
 repositories {
     maven {
-        url maven_path_topobyte
-    }
-    maven {
         url 'http://mvn.topobyte.de'
     }
     mavenCentral()
 }
 
 dependencies {
-    compile 'de.topobyte:jsoup-elements:0.0.13'
-    compile 'topobyte:pagegen-core:0.0.4'
+    compile 'de.topobyte:pagegen-core:0.0.1'
 }
 
 uploadArchives {
