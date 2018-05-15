@@ -43,8 +43,7 @@ public class BootstrapGenerator extends BaseFileGenerator
 
 	private static String[] cssPaths = new String[] {
 			"bower/bootstrap/styles/bootstrap.css",
-			"bower/bootstrap/styles/bootstrap-theme.css", "custom.css",
-			"sticky-footer-navbar.css" };
+			"bower/bootstrap/styles/bootstrap-theme.css" };
 
 	private static String[] jsPaths = new String[] {
 			"bower/jquery/js/jquery.min.js", "bower/bootstrap/js/collapse.js",
@@ -53,13 +52,14 @@ public class BootstrapGenerator extends BaseFileGenerator
 
 	public static void setupHeader(LinkResolver resolver, Element head)
 	{
-		head.appendChild(create("meta", "http-equiv", "content-type",
-				"content", "text/html; charset=utf-8"));
+		head.appendChild(create("meta", "http-equiv", "content-type", "content",
+				"text/html; charset=utf-8"));
 		head.appendChild(create("meta", "name", "viewport", "content",
 				"width=device-width, initial-scale=1"));
 
 		for (String cssPath : cssPaths) {
-			head.appendChild(styleSheet(resolver.getLink(WebPaths.get(cssPath))));
+			head.appendChild(
+					styleSheet(resolver.getLink(WebPaths.get(cssPath))));
 		}
 
 		for (String jsPath : jsPaths) {
