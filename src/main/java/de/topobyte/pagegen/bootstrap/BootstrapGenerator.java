@@ -17,16 +17,16 @@
 
 package de.topobyte.pagegen.bootstrap;
 
-import static de.topobyte.jsoup.ElementBuilder.create;
 import static de.topobyte.jsoup.ElementBuilder.script;
 import static de.topobyte.jsoup.ElementBuilder.styleSheet;
 
 import java.io.IOException;
 
-import org.jsoup.nodes.Element;
-
 import de.topobyte.jsoup.FaviconUtil;
+import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Div;
+import de.topobyte.jsoup.components.Head;
+import de.topobyte.jsoup.components.Meta;
 import de.topobyte.pagegen.core.BaseFileGenerator;
 import de.topobyte.pagegen.core.Context;
 import de.topobyte.pagegen.core.LinkResolver;
@@ -50,12 +50,15 @@ public class BootstrapGenerator extends BaseFileGenerator
 			"bower/bootstrap/js/transition.js",
 			"bower/bootstrap/js/dropdown.js" };
 
-	public static void setupHeader(LinkResolver resolver, Element head)
+	public static void setupHeader(LinkResolver resolver, Head head)
 	{
-		head.appendChild(create("meta", "http-equiv", "content-type", "content",
-				"text/html; charset=utf-8"));
-		head.appendChild(create("meta", "name", "viewport", "content",
-				"width=device-width, initial-scale=1"));
+		Meta meta = head.ac(HTML.meta());
+		meta.attr("http-equiv", "content-type");
+		meta.attr("content", "text/html; charset=utf-8");
+
+		meta = head.ac(HTML.meta());
+		meta.attr("name", "viewport");
+		meta.attr("content", "width=device-width, initial-scale=1");
 
 		for (String cssPath : cssPaths) {
 			head.appendChild(
@@ -70,7 +73,7 @@ public class BootstrapGenerator extends BaseFileGenerator
 	@Override
 	public void generate() throws IOException
 	{
-		Element head = builder.getHead();
+		Head head = builder.getHead();
 
 		setupHeader(this, head);
 
