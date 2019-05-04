@@ -42,13 +42,12 @@ public class BootstrapGenerator extends BaseFileGenerator
 	}
 
 	private static String[] cssPaths = new String[] {
-			"bower/bootstrap/styles/bootstrap.css",
-			"bower/bootstrap/styles/bootstrap-theme.css" };
+			"client/bootstrap/css/bootstrap.min.css",
+			"client/bootstrap/css/bootstrap-theme.min.css" };
 
 	private static String[] jsPaths = new String[] {
-			"bower/jquery/js/jquery.min.js", "bower/bootstrap/js/collapse.js",
-			"bower/bootstrap/js/transition.js",
-			"bower/bootstrap/js/dropdown.js" };
+			"client/jquery/jquery.min.js",
+			"client/bootstrap/js/bootstrap.min.js" };
 
 	public static void setupHeader(LinkResolver resolver, Head head)
 	{
