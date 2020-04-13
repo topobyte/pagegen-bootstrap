@@ -22,13 +22,11 @@ import static de.topobyte.jsoup.ElementBuilder.styleSheet;
 
 import java.io.IOException;
 
-import de.topobyte.jsoup.FaviconUtil;
 import de.topobyte.jsoup.HTML;
 import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.Meta;
 import de.topobyte.pagegen.core.BaseFileGenerator;
-import de.topobyte.pagegen.core.Context;
 import de.topobyte.pagegen.core.LinkResolver;
 import de.topobyte.webpaths.WebPath;
 import de.topobyte.webpaths.WebPaths;
@@ -36,9 +34,9 @@ import de.topobyte.webpaths.WebPaths;
 public class BootstrapGenerator extends BaseFileGenerator
 {
 
-	public BootstrapGenerator(Context context, WebPath path)
+	public BootstrapGenerator(WebPath path)
 	{
-		super(context, path);
+		super(path);
 	}
 
 	private static String[] cssPaths = new String[] {
@@ -75,9 +73,6 @@ public class BootstrapGenerator extends BaseFileGenerator
 		Head head = builder.getHead();
 
 		setupHeader(this, head);
-
-		String faviconPath = getLink(context.getFavIcon());
-		FaviconUtil.addToHeader(head, faviconPath);
 
 		/*
 		 * Main Content

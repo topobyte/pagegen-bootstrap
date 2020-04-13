@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    compile 'de.topobyte:pagegen-core:0.1.0'
+    compile 'de.topobyte:pagegen-core:1.0.0'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
