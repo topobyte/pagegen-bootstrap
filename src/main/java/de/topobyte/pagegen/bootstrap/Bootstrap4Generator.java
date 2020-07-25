@@ -1,4 +1,4 @@
-// Copyright 2017 Sebastian Kuerten
+// Copyright 2020 Sebastian Kuerten
 //
 // This file is part of pagegen-bootstrap.
 //
@@ -31,20 +31,32 @@ import de.topobyte.pagegen.core.LinkResolver;
 import de.topobyte.webpaths.WebPath;
 import de.topobyte.webpaths.WebPaths;
 
-public class BootstrapGenerator extends BaseFileGenerator
+public class Bootstrap4Generator extends BaseFileGenerator
 {
 
-	public BootstrapGenerator(WebPath path)
+	private boolean fluid = false;
+
+	public Bootstrap4Generator(WebPath path, boolean fluid)
 	{
 		super(path);
+		this.fluid = fluid;
+	}
+
+	public boolean isFluid()
+	{
+		return fluid;
+	}
+
+	public void setFluid(boolean fluid)
+	{
+		this.fluid = fluid;
 	}
 
 	private static String[] cssPaths = new String[] {
-			"client/bootstrap/css/bootstrap.min.css",
-			"client/bootstrap/css/bootstrap-theme.min.css" };
+			"client/bootstrap/css/bootstrap.min.css" };
 
 	private static String[] jsPaths = new String[] {
-			"client/jquery/jquery.min.js",
+			"client/jquery/jquery.min.js", "client/popper.js/umd/popper.min.js",
 			"client/bootstrap/js/bootstrap.min.js" };
 
 	public static void setupHeader(LinkResolver resolver, Head head)
@@ -55,7 +67,8 @@ public class BootstrapGenerator extends BaseFileGenerator
 
 		meta = head.ac(HTML.meta());
 		meta.attr("name", "viewport");
-		meta.attr("content", "width=device-width, initial-scale=1");
+		meta.attr("content",
+				"width=device-width, initial-scale=1, shrink-to-fit=no");
 
 		for (String cssPath : cssPaths) {
 			head.appendChild(
@@ -78,7 +91,12 @@ public class BootstrapGenerator extends BaseFileGenerator
 		 * Main Content
 		 */
 
-		content = new Div("container");
+		if (fluid) {
+			content = new Div("container-fluid");
+		} else {
+			content = new Div("container");
+		}
+
 		builder.getBody().appendChild(content);
 	}
 
