@@ -27,18 +27,19 @@ import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.Meta;
 import de.topobyte.pagegen.core.BaseFileGenerator;
-import de.topobyte.pagegen.core.LinkResolver;
+import de.topobyte.webgun.util.CacheBuster;
 import de.topobyte.webpaths.WebPath;
-import de.topobyte.webpaths.WebPaths;
 
 public class Bootstrap4Generator extends BaseFileGenerator
 {
 
+	private CacheBuster buster;
 	private boolean fluid = false;
 
-	public Bootstrap4Generator(WebPath path, boolean fluid)
+	public Bootstrap4Generator(WebPath path, CacheBuster buster, boolean fluid)
 	{
 		super(path);
+		this.buster = buster;
 		this.fluid = fluid;
 	}
 
@@ -59,7 +60,7 @@ public class Bootstrap4Generator extends BaseFileGenerator
 			"client/jquery/jquery.min.js", "client/popper.js/umd/popper.min.js",
 			"client/bootstrap/js/bootstrap.min.js" };
 
-	public static void setupHeader(LinkResolver resolver, Head head)
+	public static void setupHeader(CacheBuster buster, Head head)
 	{
 		Meta meta = head.ac(HTML.meta());
 		meta.attr("http-equiv", "content-type");
@@ -71,12 +72,11 @@ public class Bootstrap4Generator extends BaseFileGenerator
 				"width=device-width, initial-scale=1, shrink-to-fit=no");
 
 		for (String cssPath : cssPaths) {
-			head.appendChild(
-					styleSheet(resolver.getLink(WebPaths.get(cssPath))));
+			head.appendChild(styleSheet(buster.resolve(cssPath)));
 		}
 
 		for (String jsPath : jsPaths) {
-			head.appendChild(script(resolver.getLink(WebPaths.get(jsPath))));
+			head.appendChild(script(buster.resolve(jsPath)));
 		}
 	}
 
@@ -85,7 +85,7 @@ public class Bootstrap4Generator extends BaseFileGenerator
 	{
 		Head head = builder.getHead();
 
-		setupHeader(this, head);
+		setupHeader(buster, head);
 
 		/*
 		 * Main Content

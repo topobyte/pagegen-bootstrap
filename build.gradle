@@ -25,7 +25,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile 'de.topobyte:pagegen-core:1.1.0'
+    compile 'de.topobyte:pagegen-core:1.2.0'
+    compile 'de.topobyte:webgun-core:1.4.0'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

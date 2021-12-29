@@ -27,16 +27,18 @@ import de.topobyte.jsoup.components.Div;
 import de.topobyte.jsoup.components.Head;
 import de.topobyte.jsoup.components.Meta;
 import de.topobyte.pagegen.core.BaseFileGenerator;
-import de.topobyte.pagegen.core.LinkResolver;
+import de.topobyte.webgun.util.CacheBuster;
 import de.topobyte.webpaths.WebPath;
-import de.topobyte.webpaths.WebPaths;
 
 public class Bootstrap3Generator extends BaseFileGenerator
 {
 
-	public Bootstrap3Generator(WebPath path)
+	private CacheBuster buster;
+
+	public Bootstrap3Generator(WebPath path, CacheBuster buster)
 	{
 		super(path);
+		this.buster = buster;
 	}
 
 	private static String[] cssPaths = new String[] {
@@ -47,7 +49,7 @@ public class Bootstrap3Generator extends BaseFileGenerator
 			"client/jquery/jquery.min.js",
 			"client/bootstrap/js/bootstrap.min.js" };
 
-	public static void setupHeader(LinkResolver resolver, Head head)
+	public static void setupHeader(CacheBuster buster, Head head)
 	{
 		Meta meta = head.ac(HTML.meta());
 		meta.attr("http-equiv", "content-type");
@@ -58,12 +60,11 @@ public class Bootstrap3Generator extends BaseFileGenerator
 		meta.attr("content", "width=device-width, initial-scale=1");
 
 		for (String cssPath : cssPaths) {
-			head.appendChild(
-					styleSheet(resolver.getLink(WebPaths.get(cssPath))));
+			head.appendChild(styleSheet(buster.resolve(cssPath)));
 		}
 
 		for (String jsPath : jsPaths) {
-			head.appendChild(script(resolver.getLink(WebPaths.get(jsPath))));
+			head.appendChild(script(buster.resolve(jsPath)));
 		}
 	}
 
@@ -72,7 +73,7 @@ public class Bootstrap3Generator extends BaseFileGenerator
 	{
 		Head head = builder.getHead();
 
-		setupHeader(this, head);
+		setupHeader(buster, head);
 
 		/*
 		 * Main Content
